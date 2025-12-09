@@ -10270,18 +10270,18 @@ classes:
       - ea: 0x14205A228
         base: Client::Game::Character::ContainerInterface
     funcs:
-      0x14088CC50: ctor
-      0x14088CD50: InitPlayer
-      0x14088CE80: InitNPC
-      0x14088CE90: InitBoss
-      0x14088CEE0: InitCommon
-      0x14088E580: InitNPCCommon
-      0x14088E710: SetupRaw
-      0x14088F980: SetupPlayer
-      0x14088FA20: SetupBNpc
-      0x14088ED70: SetupEventNpc
-      0x140890020: SetupBuddyMount
-      0x140890820: CopyFromCharacter
+      0x14088B370: ctor
+      0x14088B470: InitPlayer
+      0x14088B5A0: InitNPC
+      0x14088B5B0: InitBoss
+      0x14088B600: InitCommon
+      0x14088CCA0: InitNPCCommon
+      0x14088CE30: SetupRaw
+      0x14088E0A0: SetupPlayer
+      0x14088E140: SetupBNpc
+      0x14088D490: SetupEventNpc
+      0x14088E740: SetupBuddyMount
+#oldfail       0x1408642D0: CopyFromCharacter
   Client::Game::Character::ModelContainer:
     vtbls:
       - ea: 0x14205A250
