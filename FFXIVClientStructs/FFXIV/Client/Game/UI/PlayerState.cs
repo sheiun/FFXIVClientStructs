@@ -118,7 +118,10 @@ public unsafe partial struct PlayerState {
 
     [FieldOffset(0x4F6), FixedSizeArray] internal FixedSizeArray7<byte> _selectedPoses;
     [FieldOffset(0x4FD), FixedSizeArray] internal FixedSizeArray3<byte> _playerStateFlags;
-    [FieldOffset(0x500), FixedSizeArray] internal FixedSizeArray14<byte> _unlockedSecretRecipeBooksBitmask;
+    [FieldOffset(0x500), FixedSizeArray, Obsolete("Use UnlockedSecretRecipeBooksBitArray")] internal FixedSizeArray14<byte> _unlockedSecretRecipeBooksBitmask;
+    // BitCount: SecretRecipeBookSheet.RowCount
+    /// <remarks> Use <see cref="IsSecretRecipeBookUnlocked"/>. </remarks>
+    [FieldOffset(0x500), FixedSizeArray(isBitArray: true, bitCount: 112)] internal FixedSizeArray14<byte> _unlockedSecretRecipeBooks;
 
     [FieldOffset(0x52A)] public byte SightseeingLogUnlockState; // 0 = Not Unlocked, 1 = ARR Part 1, 2 = ARR Part 2
     [FieldOffset(0x52B)] public byte SightseeingLogUnlockStateEx; // 3 = Quest "Sights of the North" completed (= AdventureExPhase unlocked?)

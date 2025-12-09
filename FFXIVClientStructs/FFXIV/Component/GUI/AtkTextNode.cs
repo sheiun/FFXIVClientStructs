@@ -35,8 +35,7 @@ public unsafe partial struct AtkTextNode : ICreatable {
     [FieldOffset(0x156)] public byte SheetType;
 
     [FieldOffset(0x158)] public ushort FontCacheHandle;
-    [FieldOffset(0x15A)] public byte TextFlags;
-    [FieldOffset(0x15B)] public byte TextFlags2;
+    [FieldOffset(0x15A)] public TextFlags TextFlags;
 
     // 7.0 inlines this ctor
     public void Ctor() {
@@ -101,21 +100,18 @@ public unsafe partial struct AtkTextNode : ICreatable {
 }
 
 [Flags]
-public enum TextFlags {
-    AutoAdjustNodeSize = 0x01,
-    Bold = 0x02,
-    Italic = 0x04,
-    Edge = 0x08,
-    Glare = 0x10,
-    Emboss = 0x20,
-    WordWrap = 0x40,
-    MultiLine = 0x80
-}
-
-[Flags]
-public enum TextFlags2 {
-    Ellipsis = 0x04,
-    FixedFontResolution = 0x10
+public enum TextFlags : ushort {
+    AutoAdjustNodeSize = 1 << 0,
+    Bold = 1 << 1,
+    Italic = 1 << 2,
+    Edge = 1 << 3,
+    Glare = 1 << 4,
+    Emboss = 1 << 5,
+    WordWrap = 1 << 6,
+    MultiLine = 1 << 7,
+    OverflowHidden = 1 << 8,
+    FixedFontResolution = 1 << 9,
+    Ellipsis = 1 << 10,
 }
 
 public enum FontType : byte {
