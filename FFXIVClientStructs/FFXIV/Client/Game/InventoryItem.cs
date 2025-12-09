@@ -124,7 +124,7 @@ public unsafe partial struct InventoryItem : ICreatable {
     [MemberFunction("E8 ?? ?? ?? ?? 44 0F B6 C0 41 8D 57")]
     public partial byte GetConditionPercentage();
 
-    [MemberFunction("E8 ?? ?? ?? ?? ?? ?? ?? 48 8B CF 48 8B 58")]
+    [MemberFunction("E8 ?? ?? ?? ?? 80 7D ?? ?? 75 ?? 8B 5D")]
     public partial void SetLinkedItem(InventoryType type, ushort slot);
 
     /// <summary>
@@ -162,7 +162,7 @@ public unsafe partial struct InventoryItem : ICreatable {
     public partial byte GetMateriaGrade(byte materiaSlot);
 
     /// <summary>Gets the materia count from the original InventoryItem or itself if not symbolic.</summary>
-    [MemberFunction("E8 ?? ?? ?? ?? 45 0F B6 7D")]
+    [MemberFunction("E8 ?? ?? ?? ?? 0F B6 57 67")]
     public partial byte GetMateriaCount();
 
     [MemberFunction("E8 ?? ?? ?? ?? 80 7F 5E 01")]

@@ -5,7 +5,7 @@ namespace FFXIVClientStructs.FFXIV.Client.UI.Agent;
 // Client::UI::Agent::LobbyUIClient
 //   Application::Network::LobbyClient::LobbyRequestCallback
 [GenerateInterop]
-[VirtualTable("48 8D 05 ?? ?? ?? ?? ?? ?? ?? 48 8B F9 48 89 71 ?? 48 89 71 ?? 48 89 71 ?? 48 89 71 ?? 48 89 71", 3)]
+[VirtualTable("48 8D 05 ?? ?? ?? ?? 48 89 07 48 8D 4F 78 48 89 77 30", 3)]
 [StructLayout(LayoutKind.Explicit, Size = 0x868)]
 public unsafe partial struct LobbyUIClient {
     [FieldOffset(0x08)] public LobbyData* LobbyData;

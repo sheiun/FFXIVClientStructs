@@ -31,7 +31,7 @@ public unsafe partial struct ClientObjectManager {
     [MemberFunction("E8 ?? ?? ?? ?? 4C 8B C0 4D 85 C0")]
     public partial GameObject* GetObjectByIndex(ushort id);
 
-    [MemberFunction("E8 ?? ?? ?? ?? 8B E8 4C 8D 35")]
+    [MemberFunction("E8 ?? ?? ?? ?? 48 8B 5E 68")]
     public partial uint GetIndexByObject(GameObject* character);
 
     [MemberFunction("E8 ?? ?? ?? ?? C6 43 49 00")]

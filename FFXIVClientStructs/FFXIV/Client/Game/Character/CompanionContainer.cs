@@ -10,6 +10,6 @@ public unsafe partial struct CompanionContainer {
     //used if minion is summoned but the object slot is taken by a mount
     [FieldOffset(0x18)] public ushort CompanionId;
 
-    [MemberFunction("E8 ?? ?? ?? ?? B3 ?? 41 0F BA E6")]
+    [MemberFunction("E8 ?? ?? ?? ?? 0F B7 56 68")]
     public partial void SetupCompanion(short companionId, uint param);
 }

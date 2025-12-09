@@ -107,7 +107,7 @@ public unsafe partial struct Utf8String : ICreatable, IDisposable, IStaticNative
     [MemberFunction("E8 ?? ?? ?? ?? 41 8B CF EB 15")]
     public partial Utf8String* Ctor_FromSequence(byte* str, nuint length);
 
-    [MemberFunction("E8 ?? ?? ?? ?? C7 44 F5")]
+    [MemberFunction("E8 ?? ?? ?? ?? 48 83 6E ?? ?? 75 08")]
     public partial void Dtor();
 
     [MemberFunction("E8 ?? ?? ?? ?? 4D 39 2E"), GenerateStringOverloads]
@@ -119,7 +119,7 @@ public unsafe partial struct Utf8String : ICreatable, IDisposable, IStaticNative
     [MemberFunction("E8 ?? ?? ?? ?? 85 ED 79")]
     public partial void Clear();
 
-    [MemberFunction("E8 ?? ?? ?? ?? 84 C0 41 8B F6")]
+    [MemberFunction("E8 ?? ?? ?? ?? EB 17 45 85 E4")]
     public partial bool EqualTo(Utf8String* other);
 
     [MemberFunction("E8 ?? ?? ?? ?? EB 25 83 F9 03"), GenerateStringOverloads]
@@ -139,7 +139,7 @@ public unsafe partial struct Utf8String : ICreatable, IDisposable, IStaticNative
     [MemberFunction("E8 ?? ?? ?? ?? 48 8B F8 48 3B C3")]
     public partial Utf8String* CopySubStrTo(Utf8String* destination, int start, int length);
 
-    [MemberFunction("E8 ?? ?? ?? ?? 48 8D 4D ?? E8 ?? ?? ?? ?? 41 B4")]
+    [MemberFunction("E8 ?? ?? ?? ?? 48 8D 4D A7 E8 ?? ?? ?? ?? EB 18")]
     public partial Utf8String* Replace(Utf8String* toFind, Utf8String* replacement);
 
     [MemberFunction("E8 ?? ?? ?? ?? B9 ?? ?? ?? ?? 45 84 ED")]

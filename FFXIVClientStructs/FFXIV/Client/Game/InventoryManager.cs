@@ -1,5 +1,4 @@
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
-using FFXIVClientStructs.FFXIV.Component.Excel;
 
 namespace FFXIVClientStructs.FFXIV.Client.Game;
 
@@ -9,9 +8,6 @@ namespace FFXIVClientStructs.FFXIV.Client.Game;
 public unsafe partial struct InventoryManager {
     [StaticAddress("48 8D 0D ?? ?? ?? ?? 81 C2", 3)]
     public static partial InventoryManager* Instance();
-
-    [FieldOffset(0), FixedSizeArray] internal FixedSizeArray128<InventoryOperation> _pendingOperations;
-    [FieldOffset(0x1E00)] public uint NextContextId; // id for the next operation request
 
     [FieldOffset(0x1E08)] public InventoryContainer* Inventories;
     /// <remarks>
@@ -45,9 +41,6 @@ public unsafe partial struct InventoryManager {
     [FieldOffset(0x3620)] internal InventoryItem UnkInventoryItem0;
     [FieldOffset(0x3668)] internal InventoryItem UnkInventoryItem1;
 
-    [MemberFunction("48 89 6C 24 ?? 56 57 41 56 48 83 EC 50 48 8B E9 44 8B F2")]
-    public partial void SendTradeRequest(uint entityID);
-
     [MemberFunction("E8 ?? ?? ?? ?? 88 58 18")]
     public partial InventoryContainer* GetInventoryContainer(InventoryType inventoryType);
 
@@ -60,8 +53,8 @@ public unsafe partial struct InventoryManager {
     [MemberFunction("E8 ?? ?? ?? ?? 8B F0 8D 4F FE")]
     public partial int GetItemCountInContainer(uint itemId, InventoryType inventoryType, bool isHq = false, short minCollectability = 0);
 
-    [MemberFunction("E8 ?? ?? ?? ?? 48 8B 03 66 FF C5")]
-    public partial int MoveItemSlot(InventoryType srcContainer, ushort srcSlot, InventoryType dstContainer, ushort dstSlot, bool a6 = false);
+    [MemberFunction("E8 ?? ?? ?? ?? EB 7A 83 F8 04")]
+    public partial int MoveItemSlot(InventoryType srcContainer, ushort srcSlot, InventoryType dstContainer, ushort dstSlot, byte unk = 0);
 
     [MemberFunction("40 55 53 56 57 41 55 41 57 48 8D 6C 24 ?? 48 81 EC ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 45 ?? 8D B2")]
     public partial int SplitItem(InventoryType container, ushort slot, int quantity);
@@ -88,16 +81,7 @@ public unsafe partial struct InventoryManager {
     [MemberFunction("E8 ?? ?? ?? ?? 8B F8 39 43 78")]
     public partial uint GetRetainerGil();
 
-    [MemberFunction("E8 ?? ?? ?? ?? EB 49 84 C0")]
-    public partial int MoveFromRetainerMarketToPlayerInventory(InventoryType srcInv, ushort srcSlot, uint quantity);
-
-    [MemberFunction("E8 ?? ?? ?? ?? 45 85 F6 75 22")]
-    public partial int MoveFromRetainerMarketToRetainerInventory(InventoryType srcInv, ushort srcSlot, uint quantity);
-
-    [MemberFunction("E8 ?? ?? ?? ?? 8B 56 58 33 DB")]
-    public partial void MoveToRetainerMarket(InventoryType srcInv, ushort srcSlot, InventoryType dstInv, ushort dstSlot, uint quantity, uint unitPrice);
-
-    [MemberFunction("E8 ?? ?? ?? ?? 48 8B 4B ?? 44 8B F8 ?? ?? ?? FF 52 ?? 80 BB")]
+    [MemberFunction("E8 ?? ?? ?? ?? 8B F8 39 BB ?? ?? ?? ?? 74 58 44 8B C7 BA ?? ?? ?? ?? 49 8B CF")]
     public partial uint GetFreeCompanyGil();
 
     [MemberFunction("E8 ?? ?? ?? ?? 3B C3 73 25")]
@@ -124,54 +108,24 @@ public unsafe partial struct InventoryManager {
     [MemberFunction("E8 ?? ?? ?? ?? 8D 4F DD")]
     private static partial int GetSpecialItemId(byte switchCase);
 
-    /// <summary> Gets the current maximum weekly number of limited tomestones tha player can earn. </summary>
+    /// <summary>  Gets the current maximum weekly number of limited tomestones tha player can earn. </summary>
     [MemberFunction("E8 ?? ?? ?? ?? 42 8D 0C 2B")]
     public static partial int GetLimitedTomestoneWeeklyLimit();
 
-    [MemberFunction("E8 ?? ?? ?? ?? 49 89 84 3C")]
+    [MemberFunction("E8 ?? ?? ?? ?? 48 0F AF C7 48 03 E8")]
     public partial ulong GetRetainerMarketPrice(short slot);
 
-    [MemberFunction("E8 ?? ?? ?? ?? 33 C0 89 87 ?? ?? ?? ?? 8B 47 20")]
-    public partial void SetTradeGilAmount(uint amount);
-
-    [MemberFunction("E8 ?? ?? ?? ?? 48 8B 4E ?? 40 88 69")]
+    [MemberFunction("E8 ?? ?? ?? ?? 48 8B 4B ?? 40 88 71")]
     public partial void SetRetainerMarketPrice(short slot, uint price);
 
-    [MemberFunction("E8 ?? ?? ?? ?? 4C 8B B4 35")]
+    [MemberFunction("E8 ?? ?? ?? ?? 4A 8B B4 3D")]
     public partial void SetSlotBlocked(InventoryType type, short slot);
 
     [MemberFunction("E8 ?? ?? ?? ?? 39 6B 38")]
     public partial void SetSlotUnblocked(InventoryType type, short slot);
 
-    [MemberFunction("E8 ?? ?? ?? ?? 80 BF ?? ?? ?? ?? ?? 74 57 44 0F B6 8F ?? ?? ?? ??")]
-    public partial void RefuseTrade();
-
     /// <summary> Gets the number of (limited) tomestones the user has acquired during the current reset cycle. </summary>
     public int GetWeeklyAcquiredTomestoneCount() => GetLimitedTomestoneCount(GetSpecialItemId(9));
-
-    /// <remarks>Return value is a LogMessage Id. 0 if you can equip. Row pointer is optional</remarks>
-    [MemberFunction("E8 ?? ?? ?? ?? 85 C0 75 ?? 80 7E")]
-    public static partial int CanEquip(uint itemId, byte race, byte sex, ushort level, byte classJobId, byte grandCompany, byte pvpRank, [CExporterExcel("Item")] void* itemRow);
-
-    [StructLayout(LayoutKind.Explicit, Size = 0x3C)]
-    public struct InventoryOperation {
-        [FieldOffset(0x00)] public bool IsEmpty;
-        [FieldOffset(0x04)] public uint ContextId;
-        [FieldOffset(0x08)] public int Type; // like an OpCode those change with every release :(
-        [FieldOffset(0x10)] public InventoryType SourceInventoryType;
-        [FieldOffset(0x14)] public short SourceInventorySlot;
-        [FieldOffset(0x18)] public int SourceItemQuantity;
-        [FieldOffset(0x1C)] public uint SourceItemId;
-        [FieldOffset(0x24)] public InventoryType DestinationInventoryType;
-        [FieldOffset(0x28)] public short DestinationInventorySlot;
-        [FieldOffset(0x2C)] public int DestinationItemQuantity;
-        [FieldOffset(0x30)] public uint DestinationItemId; // also used for MarketPrice??
-        [FieldOffset(0x34)] public bool Unk34;
-        [FieldOffset(0x35)] public bool Unk35;
-        [FieldOffset(0x36)] public bool Unk36;
-        [FieldOffset(0x37)] public bool Unk37;
-        [FieldOffset(0x38)] public uint Unk38;
-    }
 }
 
 public enum TradeState {

@@ -8,13 +8,13 @@ namespace FFXIVClientStructs.FFXIV.Component.GUI;
 // Component::GUI::AtkTextNode
 //   Component::GUI::AtkResNode
 //     Component::GUI::AtkEventTarget
-// common CreateAtkNode function "E8 ?? ?? ?? ?? 49 8B 55 ?? 0F B7 CD"
+// common CreateAtkNode function "E8 ?? ?? ?? ?? 49 8B 55 08 48 89 04 17"
 // type 3
 // simple text node
 [GenerateInterop]
 [Inherits<AtkResNode>]
-[StructLayout(LayoutKind.Explicit, Size = 0x168)]
-[VirtualTable("E8 ?? ?? ?? ?? 49 8B 55 ?? 0F B7 CD", [1, 144])]
+[StructLayout(LayoutKind.Explicit, Size = 0x160)]
+[VirtualTable("48 8D 05 ?? ?? ?? ?? 45 33 F6 48 89 01 8B EA", 3)]
 public unsafe partial struct AtkTextNode : ICreatable {
     [FieldOffset(0xB0)] public uint TextId;
     [FieldOffset(0xB4)] public ByteColor TextColor;
@@ -35,7 +35,8 @@ public unsafe partial struct AtkTextNode : ICreatable {
     [FieldOffset(0x156)] public byte SheetType;
 
     [FieldOffset(0x158)] public ushort FontCacheHandle;
-    [FieldOffset(0x160)] public TextFlags TextFlags;
+    [FieldOffset(0x15A)] public byte TextFlags;
+    [FieldOffset(0x15B)] public byte TextFlags2;
 
     // 7.0 inlines this ctor
     public void Ctor() {
@@ -88,12 +89,6 @@ public unsafe partial struct AtkTextNode : ICreatable {
     [MemberFunction("E8 ?? ?? ?? ?? 45 33 C0 B2 18")]
     public partial void SetFont(FontType fontType);
 
-    /// <summary>
-    /// Applies <see cref="TextFlags.Ellipsis"/> or <see cref="TextFlags.WordWrap"/> to the text from <see cref="OriginalTextPointer"/> and stores it in <see cref="NodeText"/>.
-    /// </summary>
-    [MemberFunction("E8 ?? ?? ?? ?? 48 8B 53 ?? 44 0F B6 CE")]
-    public partial void ApplyTextFlow();
-
     public AlignmentType AlignmentType {
         get => (AlignmentType)(AlignmentFontType & 0x0F);
         set => SetAlignment(value);
@@ -106,18 +101,21 @@ public unsafe partial struct AtkTextNode : ICreatable {
 }
 
 [Flags]
-public enum TextFlags : ushort {
-    AutoAdjustNodeSize = 1 << 0,
-    Bold = 1 << 1,
-    Italic = 1 << 2,
-    Edge = 1 << 3,
-    Glare = 1 << 4,
-    Emboss = 1 << 5,
-    WordWrap = 1 << 6,
-    MultiLine = 1 << 7,
-    OverflowHidden = 1 << 8,
-    FixedFontResolution = 1 << 9,
-    Ellipsis = 1 << 10,
+public enum TextFlags {
+    AutoAdjustNodeSize = 0x01,
+    Bold = 0x02,
+    Italic = 0x04,
+    Edge = 0x08,
+    Glare = 0x10,
+    Emboss = 0x20,
+    WordWrap = 0x40,
+    MultiLine = 0x80
+}
+
+[Flags]
+public enum TextFlags2 {
+    Ellipsis = 0x04,
+    FixedFontResolution = 0x10
 }
 
 public enum FontType : byte {

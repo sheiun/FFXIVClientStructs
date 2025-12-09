@@ -48,7 +48,7 @@ public unsafe partial struct RaptureLogModule {
 
     [FieldOffset(0x3488)] public AddonMessageSub AddonMessageSub3488;
 
-    [MemberFunction("E8 ?? ?? ?? ?? 41 83 EC ?? 89 43")]
+    [MemberFunction("E8 ?? ?? ?? ?? 41 83 EC 01")]
     public partial uint FormatLogMessage(uint logKindId, Utf8String* sender, Utf8String* message, int* timestamp, void* a6, Utf8String* a7, int chatTabIndex);
 
     [MemberFunction("E8 ?? ?? ?? ?? 44 39 AE ?? ?? ?? ?? 7E")]
@@ -66,7 +66,7 @@ public unsafe partial struct RaptureLogModule {
     [MemberFunction("E8 ?? ?? ?? ?? 40 84 ED 0F 84 ?? ?? ?? ?? 83 7F 20 00")] // ShowLogMessage<uint,uint,uint>
     public partial void ShowLogMessageUIntUIntUInt(uint logMessageId, uint value1, uint value2, uint value3);
 
-    [MemberFunction("E8 ?? ?? ?? ?? EB ?? 41 8B 47 ?? 85 C0")] // ShowLogMessage<string>
+    [MemberFunction("E8 ?? ?? ?? ?? EB 68 48 8B 07")] // ShowLogMessage<string>
     public partial void ShowLogMessageString(uint logMessageId, Utf8String* value);
 
     /// <summary>
